@@ -1,0 +1,286 @@
+% Source: PDF pages 38--47. The transcription stops at the end of PDF page 47.
+\section{Rational generating functions}
+\begin{definition}
+A \textit{C-finite sequence} $(f_n)=(f_0,f_1,\ldots)$ is a sequence satisfying a linear recurrence
+\[
+f_n+c_1f_{n-1}+c_2f_{n-2}+\cdots+c_rf_{n-r}=0
+\qquad(n\ge N),
+\]
+where $c_i\in\mathbb Q$, $c_r\ne0$, and $N\ge r$. The integer $r$ is the \textit{order} of the recurrence.
+\end{definition}
+The solutions of a fixed recurrence are closed under addition and scalar multiplication, so they form a vector space. A particular solution is distinguished by its initial conditions $f_0,f_1,\ldots,f_{N-1}$.
+% Source says "addition and multiplication"; scalar multiplication is
+% the operation that makes the solution set of a fixed recurrence a vector space.
+\begin{example}
+The Fibonacci numbers satisfy
+\[
+f_{n+2}=f_{n+1}+f_n\qquad(n\ge0),\qquad f_0=f_1=1.
+\]
+Equivalently, $f_n-f_{n-1}-f_{n-2}=0$ for all $n\ge2$.
+\end{example}
+\begin{theorem}
+The sequence $(f_n)$ satisfies the recurrence above if and only if
+\[
+F(z)=\sum_{n\ge0}f_nz^n=\frac{G(z)}{H(z)},
+\]
+where
+\[
+G(z)=g_0+g_1z+\cdots+g_{N-1}z^{N-1},
+\qquad H(z)=1+c_1z+\cdots+c_rz^r,
+\]
+with $\displaystyle g_k=f_k+\sum_{i=1}^k c_if_{k-i}$, taking $c_i=0$ for $i>r$.
+\end{theorem}
+\begin{proof}
+Define $c_0=1$, so $H(z)=c_0+c_1z+\cdots+c_rz^r$. Then
+\begin{align*}
+H(z)F(z)
+&=\left(\sum_{k=0}^r c_kz^k\right)
+\left(\sum_{k\ge0}f_kz^k\right)\\
+&=\sum_{n\ge0}\left(\sum_{k=0}^{\min(r,n)}c_kf_{n-k}\right)z^n.
+\end{align*}
+The recurrence holds exactly when these coefficients vanish for $n\ge N$, that is, when $H(z)F(z)$ is the polynomial $G(z)$ of degree at most $N-1$.
+% Source says degree N-1; leading coefficients can vanish, so "at most" is needed.
+\end{proof}
+\begin{example}
+The generating function of binary strings with no blocks longer than $k$ is
+\[
+W(z)=\frac{1-z^{k+1}}{1-2z+z^{k+1}}.
+\]
+Thus, by comparing coefficients after multiplying by the denominator,
+\[
+w_n=2w_{n-1}-w_{n-k-1}\qquad(n\ge k+2).
+\]
+\end{example}
+\begin{example}
+Consider the look-and-say sequence
+\[
+1,\ 11,\ 21,\ 1211,\ 111221,\ldots.
+\]
+Index the initial term $1$ by $n=0$, and let $d_n$ be the number of digits in the $n$th term. Its rational generating function is given in abbreviated form by
+\[
+D(z)=\sum_{n\ge0}d_nz^n=\frac{1+z+\cdots+18z^{77}-12z^{78}}{1-z+\cdots-9z^{71}+6z^{72}}.
+\]
+The numerator has degree $78$ and the denominator has degree $72$. This illustrates that even a sequence with a simple rule can have a complicated rational generating function. The formula counts digits, rather than giving the look-and-say terms themselves.
+% Verified against Stephen Melczer, An Invitation to Analytic Combinatorics,
+% Example 2.5, printed page 35 (submitted manuscript, September 2020).
+% https://melczer.ca/files/Melczer-SubmittedManuscript.pdf#page=51
+\end{example}
+\begin{corollary}
+If $(f_n)_{n\ge0}$ and $(g_n)_{n\ge0}$ are C-finite, then their sum and convolution are also C-finite sequences:
+\[
+(f_n+g_n)_{n\ge0},\qquad
+(h_n)_{n\ge0},\quad h_n=\sum_{k=0}^n f_kg_{n-k}.
+\]
+\end{corollary}
+
+\subsection{The C-finite coefficient theorem}
+\subsubsection{Polynomial roots and multiplicities}
+The fundamental theorem of algebra states that any polynomial $P(x)\in\mathbb C[x]$ of degree $d$ can be factored as
+\[
+P(x)=c(x-\lambda_1)\cdots(x-\lambda_d),
+\]
+for $c,\lambda_1,\ldots,\lambda_d\in\mathbb C$, with $c\ne0$.
+Grouping repeated roots gives
+\[
+P(x)=c(x-\lambda_1)^{d_1}\cdots(x-\lambda_s)^{d_s},
+\]
+where the $\lambda_i$ are distinct. The \textit{multiplicity} of $\lambda_i$ is $d_i$. If $d_i=1$, then $\lambda_i$ is a \textit{simple root}.
+\begin{lemma}
+The multiplicity of a root $\lambda_i$ is the smallest positive integer $k$ such that
+\[
+P(\lambda_i)=P'(\lambda_i)=\cdots=P^{(k-1)}(\lambda_i)=0,
+\qquad P^{(k)}(\lambda_i)\ne0.
+\]
+\end{lemma}
+\begin{proof}
+If $P(x)=c(x-\lambda_1)^{d_1}\cdots(x-\lambda_s)^{d_s}$, then the product rule writes $P^{(j)}(x)$ as a finite sum of terms. When $j<d_i$, each term retains a factor $x-\lambda_i$, so $P^{(j)}(\lambda_i)=0$. Also,
+\[
+P^{(d_i)}(\lambda_i)
+=c\,d_i!\prod_{\ell\ne i}(\lambda_i-\lambda_\ell)^{d_\ell}\ne0,
+\]
+since the roots are distinct.
+\end{proof}
+
+\subsubsection{Partial fraction decomposition}
+Suppose $F(z)=G(z)/H(z)$, where $\deg G<\deg H$, $H(0)\ne0$, and
+\[
+H(z)=c(z-\lambda_1)^{d_1}\cdots(z-\lambda_s)^{d_s},
+\]
+with distinct nonzero complex roots $\lambda_1,\ldots,\lambda_s$. Then there exist complex numbers $C_j^{(i)}$ such that
+\[
+F(z)=\sum_{i=1}^s\sum_{j=1}^{d_i}
+\frac{C_j^{(i)}}{(1-z/\lambda_i)^j}.
+\]
+\begin{theorem}{C-finite coefficient theorem}
+Suppose $(f_n)$ is a C-finite sequence with rational generating function
+\[
+F(z)=R(z)+\frac{G(z)}{H(z)},
+\]
+where $R$ is a polynomial, $\deg G<\deg H$, and $H(0)\ne0$. If $\lambda_1,\ldots,\lambda_s$ are the distinct roots of $H$, with multiplicities $d_1,\ldots,d_s$, then
+\[
+f_n=P_1(n)\lambda_1^{-n}+\cdots+P_s(n)\lambda_s^{-n}
+\qquad(n>\deg R),
+\]
+where $P_i(n)$ is a polynomial in $n$ of degree at most $d_i-1$.
+\end{theorem}
+\begin{example}
+For $\displaystyle F(z)=\frac1{3(z-1)^3(z-2)}$, the coefficient theorem gives a formula of the form
+\[
+f_n=C\left(\frac12\right)^n+(An^2+Bn+D)1^n.
+\]
+\end{example}
+\begin{proof}
+Let $n>\deg R$, so $f_n=[z^n]G(z)/H(z)$. Partial fraction decomposition gives
+\[
+\frac{G(z)}{H(z)}=A_1(z)+\cdots+A_s(z),
+\qquad A_i(z)=\sum_{j=1}^{d_i}\frac{C_j^{(i)}}{(1-z/\lambda_i)^j}.
+\]
+For a positive integer $m$, the negative binomial theorem gives
+\begin{align*}
+[z^n](1-z/\lambda_i)^{-m}
+&=(-\lambda_i)^{-n}\binom{-m}{n}\\
+&=\lambda_i^{-n}\binom{m+n-1}{m-1}\\
+&=\lambda_i^{-n}\frac{(n+m-1)(n+m-2)\cdots(n+1)}{(m-1)!}.
+\end{align*}
+Thus $[z^n]A_i(z)=\lambda_i^{-n}P_i(n)$, where $P_i(n)$ is a polynomial of degree at most $d_i-1$.
+% The source carries (-lambda_i)^(-n) into its second line; the signs
+% cancel against binom(-m,n), giving lambda_i^(-n) as written here.
+\end{proof}
+\begin{corollary}
+If $(f_n)$ satisfies
+\[
+f_n+c_1f_{n-1}+\cdots+c_rf_{n-r}=0\qquad(n\ge r),
+\]
+then
+\[
+f_n=P_1(n)\lambda_1^{-n}+\cdots+P_s(n)\lambda_s^{-n}
+\qquad(n\ge0),
+\]
+where the $\lambda_i$ are roots of
+\[
+H(z)=1+c_1z+\cdots+c_rz^r
+\]
+and $\deg P_i\le(\text{multiplicity of $\lambda_i$ as a root of $H$})-1$.
+\end{corollary}
+\begin{remark}
+The notes call $H$ the characteristic polynomial. In the convention where the characteristic polynomial is $t^r+c_1t^{r-1}+\cdots+c_r$, its roots are the reciprocals of the $\lambda_i$ used here.
+\end{remark}
+\begin{example}
+Find a closed form for the sequence satisfying
+\[
+f_{n+3}=3f_{n+1}-2f_n\qquad(n\ge0),
+\qquad f_0=f_1=4,\quad f_2=13.
+\]
+The denominator polynomial factors as
+\[
+H(z)=1-3z^2+2z^3=(1-z)^2(1+2z).
+\]
+The C-finite coefficient theorem gives constants $A,B,C\in\mathbb C$ such that
+\[
+f_n=(A+Bn)1^{-n}+C\left(-\frac12\right)^{-n}
+=A+Bn+C(-2)^n.
+\]
+The initial values give
+\begin{align*}
+4=f_0&=A+C,\\
+4=f_1&=A+B-2C,\\
+13=f_2&=A+2B+4C.
+\end{align*}
+Hence $A=3$, $B=3$, $C=1$, and
+\[
+f_n=3+3n+(-2)^n.
+\]
+\end{example}
+
+\subsection{Coefficients from poles}
+\begin{lemma}
+Assume the hypotheses of the C-finite coefficient theorem. If $\lambda_k$ is a simple root of $H(z)$ and $G(\lambda_k)\ne0$, then the polynomial $P_k(n)$ is the constant
+\[
+P_k(n)=-\frac{G(\lambda_k)}{\lambda_kH'(\lambda_k)}.
+\]
+\end{lemma}
+\begin{proof}
+Since $\lambda_k$ is a simple root, write
+\[
+H(z)=(z-\lambda_k)I(z),\qquad I(\lambda_k)\ne0.
+\]
+Partial fraction decomposition gives
+\[
+\frac{G(z)}{H(z)}=\frac{G(z)}{(z-\lambda_k)I(z)}
+=\frac c{z-\lambda_k}+\frac{J(z)}{I(z)}.
+\]
+Clearing denominators,
+\[
+G(z)=cI(z)+J(z)(z-\lambda_k).
+\]
+Setting $z=\lambda_k$ gives $G(\lambda_k)=cI(\lambda_k)$, hence $c=G(\lambda_k)/I(\lambda_k)$.
+Also,
+\[
+H'(z)=I(z)+(z-\lambda_k)I'(z),\qquad H'(\lambda_k)=I(\lambda_k).
+\]
+The polynomial $P_k(n)$ is therefore obtained from
+\begin{align*}
+[z^n]\frac c{z-\lambda_k}
+&=-\frac c{\lambda_k}[z^n]\frac1{1-z/\lambda_k}\\
+&=-\frac c{\lambda_k}\lambda_k^{-n}\\
+&=-\frac{G(\lambda_k)}{\lambda_kH'(\lambda_k)}\lambda_k^{-n}.
+\end{align*}
+\end{proof}
+\begin{lemma}
+Assume the same hypotheses. If $\lambda_k$ is a root of $H(z)$ of multiplicity $m$ and $G(\lambda_k)\ne0$, then
+\[
+P_k(n)=\frac{m(-1)^mG(\lambda_k)}{\lambda_k^mH^{(m)}(\lambda_k)}n^{m-1}
++O(n^{m-2}).
+\]
+\end{lemma}
+
+\subsection{Asymptotic notation and dominant roots}
+For sequences $(f_n)$ and $(g_n)$ of positive numbers, we write
+\begin{itemize}
+\item $f_n\sim g_n$ if $\displaystyle\lim_{n\to\infty}\frac{f_n}{g_n}=1$;
+\item $f_n=O(g_n)$ if there are $C>0$ and $N\in\N$ such that $f_n\le Cg_n$ for all $n\ge N$;
+\item $f_n=o(g_n)$ if $\displaystyle\lim_{n\to\infty}\frac{f_n}{g_n}=0$.
+\end{itemize}
+For $w\in\mathbb C$, write $w=a+bi$.
+\input{diagrams/complex-modulus}
+The \textit{modulus} of $w$ is $|w|=\sqrt{a^2+b^2}$. For complex sequences, $f_n=O(g_n)$ means $|f_n|=O(|g_n|)$.
+
+A C-finite sequence can be written, for all sufficiently large $n$, as
+\[
+f_n=P_1(n)\lambda_1^{-n}+\cdots+P_s(n)\lambda_s^{-n}.
+\]
+\begin{corollary}
+Assume the hypotheses of the C-finite coefficient theorem and that $G$ and $H$ are coprime. If
+\[
+|\lambda_1|<|\lambda_k|\qquad(2\le k\le s),
+\]
+then
+\[
+f_n=P_1(n)\lambda_1^{-n}+O(w^{-n}n^{\alpha-1}),
+\]
+where $\displaystyle w=\min_{2\le k\le s}|\lambda_k|$, and $\alpha$ is the largest multiplicity among the roots of $H$ with modulus $w$.
+\end{corollary}
+\input{diagrams/dominant-roots}
+\begin{corollary}
+Under the same assumptions, if $|\lambda_1|\le|\lambda_k|$ for all $k$, and $\lambda_1$ has multiplicity $m$ greater than that of every other root with the same modulus, then
+\[
+f_n=\frac{m(-1)^mG(\lambda_1)}{\lambda_1^mH^{(m)}(\lambda_1)}
+\lambda_1^{-n}n^{m-1}\left(1+O\left(\frac1n\right)\right).
+\]
+\end{corollary}
+\begin{example}
+The generating function of integer partitions in which every part is at most $3$ is
+\[
+F(x)=\frac1{(1-x)(1-x^2)(1-x^3)}.
+\]
+Find the asymptotic number of these partitions as $n\to\infty$.\par\medskip
+The denominator factors as
+\[
+H(x)=(1-x)^3(1+x)(1+x+x^2).
+\]
+All its roots have modulus $1$, and $x=1$ is the unique root with highest multiplicity, $3$. Here $G(x)=1$ does not vanish at $x=1$. Since $H^{(3)}(1)=-36$,
+\[
+[x^n]F(x)=\left(\frac{-3}{-36}n^2+O(n)\right)1^{-n}
+\sim\frac{n^2}{12}.
+\]
+\end{example}

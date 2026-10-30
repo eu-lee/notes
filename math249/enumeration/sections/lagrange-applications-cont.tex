@@ -1,0 +1,47 @@
+% Source: PDF pages 36--37.
+\subsection{Expected number of leaves using Lagrange inversion}
+Suppose $F(u,z)$ is a bivariate generating function, with parameter $\chi$. Recall that
+\[
+\mathbb E_n[\chi]
+=\frac{[z^n]\left.\dfrac{\partial}{\partial u}F(u,z)\right|_{u=1}}
+{[z^n]F(1,z)}.
+\]
+Coefficient extraction and differentiation commute:
+\[
+[z^n]\left.\frac{\partial}{\partial u}F(u,z)\right|_{u=1}
+=\left.\frac{\partial}{\partial u}[z^n]F(u,z)\right|_{u=1}.
+\]
+% Source page 36 writes F(u,z) rather than F(1,z) in the denominator
+% of the expectation formula; evaluation at u=1 is required.
+\begin{example}
+The bivariate generating function for nonempty binary trees, enumerated by size and number of leaves, satisfies
+\[
+N(u,z)=uz+2zN(u,z)+zN(u,z)^2.
+\]
+Here the $uz$ term represents a single leaf. Thus
+\[
+z=\frac{N(u,z)}{G_u(N(u,z))},\qquad G_u(t)=u+2t+t^2.
+\]
+Using Lagrange inversion,
+\begin{align*}
+[z^n]\left.\frac{\partial}{\partial u}N(u,z)\right|_{u=1}
+&=\left.\frac{\partial}{\partial u}[z^n]N(u,z)\right|_{u=1}\\
+&=\left.\frac{\partial}{\partial u}
+\left(\frac1n[t^{n-1}](u+2t+t^2)^n\right)\right|_{u=1}\\
+&=\frac1n[t^{n-1}]
+\left.\frac{\partial}{\partial u}(u+2t+t^2)^n\right|_{u=1}\\
+&=\frac1n[t^{n-1}]\left.n(u+2t+t^2)^{n-1}\right|_{u=1}\\
+&=[t^{n-1}](1+2t+t^2)^{n-1}\\
+&=[t^{n-1}](1+t)^{2(n-1)}
+=\binom{2n-2}{n-1}.
+\end{align*}
+Consequently, for $n\ge1$,
+\begin{align*}
+\mathbb E_n[\chi]
+&=\frac{\binom{2n-2}{n-1}}{\frac1{n+1}\binom{2n}{n}}\\
+&=(n+1)\frac{(2n-2)!}{(2n)!}
+\frac{n!}{(n-1)!}\frac{n!}{(n-1)!}\\
+&=\frac{n(n+1)}{2(2n-1)}\sim\frac n4.
+\end{align*}
+Thus asymptotically one quarter of the vertices in a uniformly chosen binary tree of size $n$ are leaves, on average.
+\end{example}

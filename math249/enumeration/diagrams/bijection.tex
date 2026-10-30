@@ -1,0 +1,11 @@
+\begin{center}
+\begin{tikzpicture}[>=Stealth,scale=.75]
+\draw (0,0) ellipse (.4 and 1.15);
+\draw (2.3,0) ellipse (.4 and 1.15);
+\node at (0,1.5) {$A$}; \node at (2.3,1.5) {$B$};
+\foreach \y in {-.75,-.25,.25,.75}{
+  \fill (0,\y) circle (1.7pt); \fill (2.3,\y) circle (1.7pt);
+  \draw[->] (.2,\y)--(2.1,\y);
+}
+\end{tikzpicture}
+\end{center}

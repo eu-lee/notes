@@ -1,0 +1,195 @@
+% Source: PDF pages 7--13.
+\section{A general framework for enumeration}
+\begin{definition}
+A \textit{combinatorial class} is a set $A$ together with a size or weight function $w\colon A\to\N$ such that there are finitely many objects of each size. In other words,
+\[
+A_n=w^{-1}(n)=\{a\in A:w(a)=n\}
+\]
+is finite for every $n\in\N$. Typically we write $w(a)=|a|$.
+\end{definition}
+\begin{remark}
+The entire set $A$ need not be finite; only each set of objects of a fixed weight must be finite.
+\end{remark}
+\begin{example}
+Let $B=\{\varepsilon,0,1,00,01,10,11,\ldots\}$ be the set of binary strings, where $\varepsilon$ is the empty string.
+\begin{itemize}
+\item If $|s|$ is the length of $s$, then $(B,|\cdot|_B)$ is a combinatorial class.
+\item If $|s|$ is the number of $0$s in $s$, this is not a combinatorial class: $B_0=\{\varepsilon,1,11,\ldots\}$ is infinite.
+\end{itemize}
+We consider different weights because we may want to count other properties, such as the number of $1$s or $0$s.
+\end{example}
+\begin{definition}
+A \textit{bijection between classes} $(A,|\cdot|_A)$ and $(B,|\cdot|_B)$ is a bijection $f\colon A\to B$ that respects size:
+\[
+|a|_A=|f(a)|_B\qquad\text{for all }a\in A.
+\]
+The \textit{counting sequence} of a class $(A,|\cdot|)$ is defined by
+\[
+a_n=|A_n|=\text{number of objects of size $n$}.
+\]
+\end{definition}
+For binary strings with length as size, $b_n=2^n$.
+
+\subsection{Generating functions and formal series}
+\begin{definition}
+The \textit{generating function} (or \textit{generating series}) of a sequence $(a_n)$ is
+\[
+\sum_{n\ge0}a_nz^n=a_0+a_1z+a_2z^2+\cdots.
+\]
+The generating function of a class $(A,|\cdot|)$ is the generating function of its counting sequence.
+\end{definition}
+\begin{example}
+The generating function for the class $B$ of binary strings is
+\[
+B(z)=\sum_{n\ge0}b_nz^n=\sum_{n\ge0}2^nz^n.
+\]
+\end{example}
+This is a \textit{formal series}. Analytically, $\displaystyle \sum_{n\ge0}2^nz^n$ converges for $|z|<\frac12$, whereas $\displaystyle \sum_{n\ge0}n!z^n$ diverges unless $z=0$.
+
+For formal series, define addition and multiplication by
+\begin{align*}
+\sum_{n\ge0}a_nx^n+\sum_{n\ge0}b_nx^n
+  &=\sum_{n\ge0}(a_n+b_n)x^n,\\
+\left(\sum_{n\ge0}a_nx^n\right)\left(\sum_{n\ge0}b_nx^n\right)
+  &=\sum_{n\ge0}\left(\sum_{k=0}^n a_kb_{n-k}\right)x^n.
+\end{align*}
+The usual algebraic properties still hold formally. We write $\mathbb{Q}[[x]]$ for the ring of formal power series with rational coefficients, and $\mathbb{Q}[x]$ for the ring of polynomials.
+\begin{example}
+Consider $F(x)=1-x$. Does there exist a series $\displaystyle G(x)=\sum_{n\ge0}g_nx^n$ such that $F(x)G(x)=1$?\par\medskip
+Let $\displaystyle G(x)=\sum_{n\ge0}x^n$. Then
+\begin{align*}
+F(x)G(x)&=(1-x)\left(\sum_{n\ge0}x^n\right)\\
+&=\sum_{n\ge0}x^n-x\sum_{n\ge0}x^n\\
+&=1+\sum_{n\ge1}x^n-\sum_{n\ge1}x^n=1.
+\end{align*}
+Thus $\displaystyle\frac1{F(x)}=G(x)=\frac1{1-x}$ as formal series.
+\end{example}
+\begin{example}
+If $F(x)=x+x^2$, then formally factoring gives
+\[
+\frac1{F(x)}=\frac1x\frac1{1+x}
+=\frac1x\sum_{n\ge0}(-1)^nx^n.
+\]
+This contains an $x^{-1}$ term, so it is not a formal power series. No $G(x)\in\mathbb{Q}[[x]]$ can satisfy $G(x)F(x)=1$.
+\end{example}
+\begin{lemma}
+If $\displaystyle F(x)=\sum_{n\ge0}f_nx^n$, then $1/F(x)$ exists in $\mathbb{Q}[[x]]$ if and only if $f_0\ne0$.
+\end{lemma}
+\begin{lemma}
+The formal substitution $F(G(x))$ is defined if and only if $F$ is a polynomial or $g_0=0$, where $\displaystyle G(x)=\sum_{n\ge0}g_nx^n$.
+\end{lemma}
+Indeed, in $\displaystyle F(G(x))=\sum_{n\ge0}f_nG(x)^n$, each coefficient must receive only finitely many contributions.
+% Formal substitution is understood coefficientwise, without assigning analytic sums.
+
+\subsection{Examples of generating functions}
+\begin{example}
+Find the generating function for $m_n$, the number of ways to make change for $n$ cents using $1$, $5$, $10$, and $25$ cent coins.\par\medskip
+Let $M=\{(a,b,c,d)\in\N^4\}$ and define $|(a,b,c,d)|=a+5b+10c+25d$. Then
+\begin{align*}
+M(x)&=\sum_{\sigma\in M}x^{|\sigma|}
+=\sum_{(a,b,c,d)\in M}x^{a+5b+10c+25d}\\
+&=\left(\sum_{a\ge0}x^a\right)
+\left(\sum_{b\ge0}x^{5b}\right)
+\left(\sum_{c\ge0}x^{10c}\right)
+\left(\sum_{d\ge0}x^{25d}\right)\\
+&=\frac1{(1-x)(1-x^5)(1-x^{10})(1-x^{25})}.
+\end{align*}
+For example, substituting $G(x)=x^5$ into $F(x)=1/(1-x)$ is valid since $G(0)=0$.
+Computing coefficients gives
+\[
+M(x)=1+x+x^2+\cdots+242x^{100}+\cdots.
+\]
+There are $242$ ways to make change for one dollar. Asymptotically, $m_n\sim n^3/7500$.
+\end{example}
+\begin{example}
+The generating function for the sum of two standard dice is
+\begin{align*}
+D(x)&=(x+x^2+x^3+x^4+x^5+x^6)^2\\
+&=(x+2x^2+2x^3+x^4)(x+x^3+x^4+x^5+x^6+x^8).
+\end{align*}
+The coefficients in each factor sum to $6$. Thus two dice with faces
+\[
+(1,2,2,3,3,4)\qquad\text{and}\qquad(1,3,4,5,6,8)
+\]
+give the same probability of rolling each possible sum as two standard dice.
+\end{example}
+\begin{remark}
+Recall that for a class $\mathcal C$,
+\[
+C(x)=\sum_{n\ge0}c_nx^n=\sum_{\sigma\in\mathcal C}x^{|\sigma|}.
+\]
+The reciprocal $1/F(x)$ exists as a formal series exactly when $F(0)\ne0$. A composition $G(F(x))$ is formally defined if and only if $G$ is a polynomial or $F(0)=0$.
+\end{remark}
+
+\subsection{Binomial theorems}
+\begin{theorem}{Binomial theorem}
+If $n\in\N$, then
+\[
+(1+x)^n=\sum_{k=0}^n\binom{n}{k}x^k.
+\]
+\end{theorem}
+\begin{theorem}{Negative binomial theorem}
+If $t$ is a positive integer, then
+\[
+\frac1{(1-x)^t}=\sum_{n\ge0}\binom{n+t-1}{t-1}x^n.
+\]
+\end{theorem}
+\begin{proof}
+The right-hand side is the generating function for multisets with $t$ types. Thus
+\begin{align*}
+\sum_{n\ge0}\binom{n+t-1}{t-1}x^n
+&=\sum_{(m_1,\ldots,m_t)\in\N^t}x^{m_1+\cdots+m_t}\\
+&=\left(\sum_{m_1\ge0}x^{m_1}\right)\cdots
+\left(\sum_{m_t\ge0}x^{m_t}\right)
+=\frac1{(1-x)^t}.
+\end{align*}
+\end{proof}
+\begin{definition}
+For $k\in\N$ and $\alpha\in\mathbb C$, define
+\[
+\binom{\alpha}{k}=\frac{\alpha(\alpha-1)\cdots(\alpha-k+1)}{k!},
+\qquad \binom{\alpha}{0}=1.
+\]
+\end{definition}
+\begin{remark}
+For integers $\alpha\ge k$, this agrees with $\displaystyle\frac{\alpha!}{k!(\alpha-k)!}$. For arbitrary complex $\alpha$, we use the falling-product definition above; ordinary factorials are not defined for all complex arguments.
+\end{remark}
+\begin{theorem}{Generalized binomial theorem}
+For any $\alpha\in\mathbb C$,
+\[
+(1+x)^\alpha=\sum_{n\ge0}\binom{\alpha}{n}x^n.
+\]
+\end{theorem}
+From the negative binomial theorem,
+\[
+\binom{n+t-1}{t-1}=(-1)^n\binom{-t}{n}.
+\]
+
+\subsection{Coefficient extraction}
+We write $\displaystyle[x^n]\left(\sum_{k\ge0}c_kx^k\right)=c_n$. In particular, $[x^0]F(x)=f_0=F(0)$.
+The rules for coefficient extraction are
+\begin{align*}
+[x^n]\lambda A(x)&=\lambda[x^n]A(x),\\
+[x^n](A(x)+B(x))&=[x^n]A(x)+[x^n]B(x),\\
+[x^n]F(ax)&=a^n[x^n]F(x),\\
+[x^n]x^kF(x)&=[x^{n-k}]F(x).
+\end{align*}
+The last expression is zero when $k>n$. The scaling rule follows by writing $\displaystyle F(ax)=\sum_{n\ge0}f_na^nx^n$.
+\begin{example}
+Find $\displaystyle[x^n]\frac{1-\sqrt{1-4x}}{2x}$.
+This is the Catalan series, which is in bijection with many different classes of objects.
+\par\medskip
+\begin{align*}
+[x^n]\frac{1-\sqrt{1-4x}}{2x}
+&=\frac12[x^{n+1}](1-\sqrt{1-4x})\\
+&=-\frac12[x^{n+1}]\sqrt{1-4x}\\
+&=-\frac12(-4)^{n+1}[x^{n+1}](1+x)^{1/2}\\
+&=-\frac12(-4)^{n+1}\binom{1/2}{n+1}\\
+&=-\frac12(-4)^{n+1}
+\frac{\frac12(\frac12-1)\cdots(\frac12-n)}{(n+1)!}\\
+&=\frac{2^n(-2)^n(\frac12-1)(\frac12-2)\cdots(\frac12-n)}{(n+1)!}\\
+&=\frac{(1)(3)(5)\cdots(2n-1)\,\underbrace{2^n n!}_{2\cdot4\cdots(2n)}}{(n+1)!\,n!}\\
+&=\frac{(2n)!}{n!\,n!}\frac1{n+1}
+=\frac1{n+1}\binom{2n}{n}.
+\end{align*}
+\end{example}

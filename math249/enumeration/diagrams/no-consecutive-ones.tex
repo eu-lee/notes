@@ -1,0 +1,15 @@
+\begin{center}
+\begin{tikzpicture}[>=Stealth,auto,node distance=3cm,
+state/.style={circle,draw,minimum size=8mm},accept/.style={state,double,double distance=1.5pt}]
+\node[accept] (a) {$A$};
+\node[accept,right=of a] (b) {$B$};
+\node[state,right=of b] (c) {$C$};
+\draw[->] (-1,.7)--(a);
+\path[->] (a) edge[loop below] node {$0$} (a)
+ (a) edge[bend left=22] node {$1$} (b)
+ (b) edge[bend left=22] node {$0$} (a)
+ (b) edge node {$1$} (c)
+ (c) edge[loop above] node {$0$} (c)
+ (c) edge[loop below] node {$1$} (c);
+\end{tikzpicture}
+\end{center}

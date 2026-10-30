@@ -1,0 +1,84 @@
+% Source: PDF pages 33--34. The five-way-tree calculation continues on page 35.
+\section{The Lagrange implicit function theorem}
+\begin{theorem}{Lagrange implicit function theorem (LIFT)}
+Let $R$ be a power series in $z$ with no constant term, satisfying
+\[
+z=\frac{R(z)}{G(R(z))},
+\]
+where $G(t)$ is a series such that $1/G(t)$ is a power series. Then, for $n\ge1$,
+\[
+[z^n]R(z)=\frac1n[t^{n-1}]G(t)^n.
+\]
+More generally, for positive integers $k$,
+\[
+[z^n]R(z)^k=\frac kn[t^{n-k}]G(t)^n.
+\]
+\end{theorem}
+\begin{example}
+The class $T$ of nonempty rooted planar trees consists of a root vertex followed by some, possibly no, ordered subtrees. It satisfies
+\[
+T=\mathcal Z\times\operatorname{SEQ}(T).
+\]
+Thus
+\[
+T(z)=\frac z{1-T(z)},\qquad
+z=\frac{T(z)}{G(T(z))},\qquad G(t)=(1-t)^{-1}.
+\]
+Therefore, for $n\ge1$,
+\begin{align*}
+[z^n]T(z)
+&=\frac1n[t^{n-1}](1-t)^{-n} &&\text{(LIFT)}\\
+&=\frac1n(-1)^{n-1}\binom{-n}{n-1}
+ &&\text{(negative binomial theorem)}\\
+&=\frac1n\binom{2n-2}{n-1}.
+\end{align*}
+For comparison, $\displaystyle\frac1{n+1}\binom{2n}{n}$ counts rooted planar binary trees with $n$ vertices.
+\end{example}
+\begin{example}
+Fix a positive integer $r$. Find the number of rooted planar trees in which every vertex has either $0$ or exactly $r$ nonempty subtrees.\par\medskip
+The combinatorial description implies that the class $T$ of these nonempty trees satisfies
+\[
+T=\mathcal Z+\mathcal Z\times T^r,
+\]
+so
+\[
+T(z)=z+zT(z)^r=z\bigl(1+T(z)^r\bigr).
+\]
+Therefore
+\[
+z=\frac{T(z)}{G(T(z))},\qquad G(t)=1+t^r.
+\]
+LIFT and the binomial theorem imply
+\begin{align*}
+[z^n]T(z)&=\frac1n[t^{n-1}](1+t^r)^n\\
+&=\begin{cases}
+0,&r\nmid n-1,\\[2pt]
+\displaystyle\frac1n\binom n{(n-1)/r},&r\mid n-1.
+\end{cases}
+\end{align*}
+In the second case, $n-1=kr$ for an integer $k$.
+\end{example}
+\begin{example}
+The class of rooted planar $5$-ary trees satisfies
+\[
+F=\mathcal E+\mathcal Z\times F^5,
+\qquad F(z)=1+zF(z)^5.
+\]
+To apply LIFT, we first need to remove the constant term.
+Let $S(z)=F(z)-1$. Then
+\[
+S(z)=z\bigl(S(z)+1\bigr)^5,
+\qquad z=\frac{S(z)}{G(S(z))},\qquad G(t)=(1+t)^5.
+\]
+By the Lagrange inversion formula, for $n\ge1$,
+\begin{align*}
+[z^n]F(z)&=[z^n]S(z)\\
+&=\frac1n[t^{n-1}](1+t)^{5n}\\
+&=\frac1n\binom{5n}{n-1}.
+\end{align*}
+Therefore
+\[
+F(z)=1+\sum_{n\ge1}\frac1n\binom{5n}{n-1}z^n.
+\]
+
+\end{example}

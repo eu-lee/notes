@@ -1,0 +1,22 @@
+\begin{center}
+\begin{tikzpicture}[x=.7cm,y=.7cm,
+  vertex/.style={circle,fill=noteink,inner sep=1.5pt},
+  leaf/.style={rectangle,draw=notelink,fill=white,inner sep=2.3pt}]
+% One vertex, two trees with two vertices, five trees with three vertices.
+\node[leaf] at (0,0) {};
+\node[vertex] (a) at (1.5,0) {}; \node[leaf] (b) at (1.1,-.65) {}; \draw (a)--(b);
+\node[vertex] (c) at (2.8,0) {}; \node[leaf] (d) at (3.2,-.65) {}; \draw (c)--(d);
+\node[vertex] (a) at (4.6,0) {};
+\node[leaf] (b) at (4.2,-.65) {}; \node[leaf] (c) at (5,-.65) {};
+\draw (b)--(a)--(c);
+\foreach \x/\s/\t in {6.2/1/1,7.7/1/-1,9.3/-1/1,10.8/-1/-1}{
+  \node[vertex] (a) at (\x,0) {};
+  \node[vertex] (b) at (\x+.4*\s,-.65) {};
+  \node[leaf] (c) at (\x+.4*\s+.4*\t,-1.3) {};
+  \draw (a)--(b)--(c);
+}
+\node[below] at (0,-1.65) {$uz$};
+\node[below] at (2.15,-1.65) {$2uz^2$};
+\node[below] at (7.7,-1.65) {$(u^2+4u)z^3$};
+\end{tikzpicture}
+\end{center}

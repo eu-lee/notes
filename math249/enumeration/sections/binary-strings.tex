@@ -1,0 +1,196 @@
+% Source: PDF pages 20--26.
+\section{Binary strings and regular expressions}
+We have seen how to count all binary strings: $b_n=2^n$ and
+\[
+B(x)=\sum_{n\ge0}b_nx^n=\sum_{n\ge0}2^nx^n=\frac1{1-2x}.
+\]
+We now consider binary strings with restrictions.
+
+\subsection{Concatenation}
+We write strings as sequences of digits without commas: $(0,1,1,0)=0110$.
+\begin{definition}
+The \textit{concatenation} of $\sigma=\sigma_1\sigma_2\cdots\sigma_r$ and $\tau=\tau_1\tau_2\cdots\tau_s$ is
+\[
+\sigma\tau=\sigma_1\sigma_2\cdots\sigma_r\tau_1\tau_2\cdots\tau_s.
+\]
+\end{definition}
+\begin{itemize}
+\item The empty string $\varepsilon$ has size $0$ and satisfies $\varepsilon\sigma=\sigma=\sigma\varepsilon$ for every string $\sigma$.
+\item We write $\sigma^k=\underbrace{\sigma\sigma\cdots\sigma}_{k\text{ times}}$.
+\item We say that $\sigma$ is a \textit{substring} of $\tau$ if $\sigma$ occurs within $\tau$ with no gaps.
+\item The \textit{concatenation product} of sets $S$ and $T$ of strings is $ST=\{\sigma\tau:\sigma\in S,\ \tau\in T\}$.
+\item We write $S^k=\underbrace{SS\cdots S}_{k\text{ times}}$, $S^0=\{\varepsilon\}$, and $\displaystyle S^*=\bigcup_{k\ge0}S^k$.
+\end{itemize}
+\begin{remark}
+Concatenation can identify different pairs. For example,
+\[
+\{1,10\}\{1,01\}=\{11,101,101,1001\}=\{11,101,1001\},
+\]
+whereas the Cartesian product consists of the four distinct pairs
+\[
+\{(1,1),(10,1),(1,01),(10,01)\}.
+\]
+\end{remark}
+\begin{example}
+\begin{itemize}
+\item $\{0,1\}^*$ is the set of all binary strings.
+\item $\{0,1\}\{0,1\}^*$ is the set of all nonempty binary strings.
+\item $(\{0,1\}^2)^*$ is the set of all binary strings of even length.
+\end{itemize}
+\end{example}
+A set of strings can be specified in more than one way. For example,
+\[
+\{0,1\}^*=\{\varepsilon,0,1\}^*
+\]
+as sets of strings, but the expressions do not describe the same ways of producing a string: empty strings can be inserted in the second description. We need to consider how strings are produced, not just which strings are obtained.
+
+\subsection{Regular expressions and ambiguity}
+\begin{definition}
+A \textit{regular expression} is defined recursively by one of the following:
+\begin{enumerate}
+\item $\varepsilon$, $0$, or $1$;
+\item $R\cup S$, where $R$ and $S$ are regular expressions;
+\item $RS$, where $R$ and $S$ are regular expressions;
+\item $R^*$, where $R$ is a regular expression.
+\end{enumerate}
+A regular expression $R$ produces a set of strings $\mathcal L(R)$, called a \textit{regular language}.
+\end{definition}
+We use $0\cup1$ as shorthand for $\{0,1\}$.
+\Needspace{11\baselineskip}
+\begin{example}
+\leavevmode\par
+\begin{itemize}
+\item $(00)(1\cup01)$ produces $\{001,0001\}$.
+\item $(10)^5(111)$ produces $\{1010101010111\}$.
+\item $(0\cup1)^*$ produces all binary strings.
+\end{itemize}
+\end{example}
+Regular languages are important in computer science because they are exactly the languages accepted by finite automata. For example, the following automaton accepts all binary strings with no two consecutive $1$s. Double circles indicate accepting states.
+\input{diagrams/no-consecutive-ones}
+\begin{example}
+The expression $(1\cup10)(1\cup01)$ produces
+\[
+\{1,10\}\{1,01\}=\{11,101,101,1001\}.
+\]
+The string $101$ is produced in two different ways.
+\end{example}
+\begin{definition}
+A regular expression is \textit{unambiguous} if it produces each string in only one way; otherwise it is \textit{ambiguous}.
+\end{definition}
+\begin{example}
+The expression $(0\cup1)^*$ is unambiguous. The expression $(\varepsilon\cup0\cup1)^*$ is ambiguous, since $1=\varepsilon1=1\varepsilon=\cdots$.
+\end{example}
+To show that an expression is unambiguous, use the following rules:
+\begin{itemize}
+\item $\varepsilon$, $0$, and $1$ are unambiguous.
+\item Suppose $R$ and $S$ are unambiguous and produce the languages $\mathcal R$ and $\mathcal S$.
+Then $R\cup S$ is unambiguous if and only if $\mathcal R\cap\mathcal S=\varnothing$.
+\item Under the same assumption, $RS$ is unambiguous if and only if every string in $\mathcal R\mathcal S$ has a unique factorization $rs$ with $r\in\mathcal R$ and $s\in\mathcal S$.
+\item $R^*$ is unambiguous if and only if each $R^k$ is unambiguous and the languages $\mathcal R^k$ are pairwise disjoint.
+\end{itemize}
+\begin{lemma}
+The expression $0^*(10^*)^*$ produces all binary strings and is unambiguous.
+\end{lemma}
+\begin{proof}
+For example, consider the following string, broken at its $1$s:
+\input{diagrams/string-decomposition}
+A string begins with a possibly empty sequence of $0$s, then breaks into pieces beginning with $1$. We can uniquely decompose it using the locations of its $1$s as
+\[
+\underbrace{(0\cdots0)}_{m_0}
+\underbrace{(10\cdots0)}_{1+m_1}\cdots
+\underbrace{(10\cdots0)}_{1+m_r},
+\]
+for some $r\ge0$ and $m_0,m_1,\ldots,m_r\ge0$.
+Ranging over all these values gives every binary string, with a unique decomposition.
+\end{proof}
+\begin{corollary}
+The expression $1^*(01^*)^*$ unambiguously produces all binary strings.
+\end{corollary}
+These expressions can be modified to produce strings with restrictions.
+\begin{example}
+Give an unambiguous regular expression for the binary strings in which every $0$ is followed by at least one $1$.\par\medskip
+Start with $1^*(01^*)^*$. In this expression a $0$ may be followed by any number of $1$s, including none. Requiring at least one gives
+\[
+1^*(011^*)^*.
+\]
+This expression is unambiguous and has generating function
+\[
+\frac1{1-x}\cdot\frac1{1-\frac{x^2}{1-x}}.
+\]
+\end{example}
+
+Unambiguous expressions translate into generating functions:
+\begin{center}
+\begin{tabular}{c|c}
+Expression & Generating function \\
+\hline
+$\varepsilon$ & $1$ \\
+$0$ or $1$ & $x$ \\
+$R\cup S$ & $R(x)+S(x)$ \\
+$RS$ & $R(x)S(x)$ \\
+$R^*$ & $\displaystyle\frac1{1-R(x)}$
+\end{tabular}
+\end{center}
+\begin{remark}
+Unambiguity is the key: union must not count a string twice, concatenation must correspond to the Cartesian product without collisions, and an unambiguous starred expression cannot have the empty string in its repeated language.
+\end{remark}
+
+\subsection{Blocks and restrictions}
+\begin{definition}
+A \textit{block} of a binary string is a nonempty maximal consecutive sequence of the same digit.
+\end{definition}
+\begin{example}
+The string $00011101100$ has blocks
+\[
+\underbrace{000}_{3}\ \underbrace{111}_{3}\ \underbrace{0}_{1}\
+\underbrace{11}_{2}\ \underbrace{00}_{2}.
+\]
+\end{example}
+\begin{theorem}
+The expressions
+\[
+0^*(11^*00^*)^*1^*
+\qquad\text{and}\qquad
+1^*(00^*11^*)^*0^*
+\]
+unambiguously produce all binary strings.
+\end{theorem}
+The idea is to separate the initial possibly empty block, the alternating nonempty blocks, and the final possibly empty block. For example, the first expression starts with $0$s (or nothing), then has pairs of a $1$-block and a $0$-block, and can end in $1$s. The maximal blocks determine the decomposition uniquely.
+\begin{example}
+Find the generating function for binary strings in which every block has length at most $2$.\par\medskip
+Modify $1^*(00^*11^*)^*0^*$ by restricting each block to obtain the unambiguous expression
+\[
+(\varepsilon\cup1\cup11)((0\cup00)(1\cup11))^*(\varepsilon\cup0\cup00).
+\]
+Its generating function is
+\begin{align*}
+B(x)&=(1+x+x^2)\frac1{1-(x+x^2)^2}(1+x+x^2)\\
+&=\frac{(1+x+x^2)^2}{(1-x-x^2)(1+x+x^2)}\\
+&=\frac{1+x+x^2}{1-x-x^2}.
+\end{align*}
+\end{example}
+\begin{example}
+Find the generating function for binary strings in which every block of $0$s has even length.\par\medskip
+A nonempty even-length block of $0$s is represented unambiguously by $(00)(00)^*$. Thus the required strings are produced by
+\[
+1^*\bigl((00)(00)^*11^*\bigr)^*(00)^*.
+\]
+The generating function is
+\begin{align*}
+S(x)&=\frac1{1-x}\cdot
+\frac1{1-\frac{x^3}{(1-x)(1-x^2)}}\cdot\frac1{1-x^2}\\
+&=\frac1{1-x-x^2}.
+\end{align*}
+\end{example}
+\begin{example}
+Find the generating function for binary strings that do not contain $011$ as a substring.\par\medskip
+Starting with $1^*(00^*11^*)^*0^*$, restrict the $1$-block after any $0$-block to have length at most one. This gives
+\[
+1^*(00^*1)^*0^*.
+\]
+The generating function is
+\[
+\frac1{1-x}\cdot\frac1{1-\frac{x^2}{1-x}}\cdot\frac1{1-x}
+=\frac1{1-2x+x^3}.
+\]
+\end{example}

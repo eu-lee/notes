@@ -1,0 +1,201 @@
+% Source: PDF pages 27--32.
+\section{Bivariate generating functions}
+A generating function tracks objects by size. To track other properties, we use more variables.
+\begin{definition}
+A \textit{combinatorial class with a parameter} $(C,|\cdot|,\chi)$ consists of
+\begin{itemize}
+\item a set of objects $C$;
+\item a size function $|\cdot|\colon C\to\N$ such that there are finitely many objects of each size;
+\item a parameter function $\chi\colon C\to\N$.
+\end{itemize}
+Its \textit{bivariate generating function} is
+\[
+C(u,z)=\sum_{\sigma\in C}u^{\chi(\sigma)}z^{|\sigma|}
+=\sum_{n\ge0}\left(\sum_{k\ge0}c_{k,n}u^k\right)z^n,
+\]
+where $c_{k,n}$ is the number of objects in $C$ with size $n$ and parameter value $k$.
+\end{definition}
+Setting $u=1$ forgets the parameter:
+\[
+C(1,z)=\sum_{\sigma\in C}z^{|\sigma|}=C(z).
+\]
+\begin{example}
+Let $B$ be the class of binary strings with size given by length and parameter given by the number of $0$s. Then
+\begin{align*}
+B(u,z)&=\sum_{n\ge0}\left(\sum_{k\ge0}\binom nk u^k\right)z^n\\
+&=\sum_{n\ge0}(1+u)^nz^n\\
+&=\sum_{n\ge0}\bigl((1+u)z\bigr)^n
+=\frac1{1-(1+u)z}.
+\end{align*}
+This calculation starts with the counting series. We also want a way to pass directly from classes to generating functions.
+\end{example}
+
+\subsection{Markers}
+To build bivariate generating functions, add a \textit{marker} $\mu$ to the constructions.
+\begin{itemize}
+\item $\mu$ has size $0$ and parameter value $1$, so its generating function is $z^0u^1=u$.
+\item $\mathcal E$ has size $0$ and parameter value $0$, so its generating function is $1$.
+\item $\mathcal Z$ has size $1$ and parameter value $0$, so its generating function is $z$.
+\end{itemize}
+The marker keeps track of the parameter without contributing to size.
+\begin{example}
+For binary strings enumerated by length and number of zeros,
+\[
+B=\operatorname{SEQ}(\mathcal Z_0\times\mu+\mathcal Z_1).
+\]
+Thus
+\[
+B(u,z)=\frac1{1-uz-z}=\frac1{1-(1+u)z}.
+\]
+\end{example}
+\begin{example}
+Let $C$ be the class of integer compositions, tracking the number of parts equal to $1$. Its specification is
+\[
+C=\operatorname{SEQ}\bigl(\mathcal Z\times\mu
+  +\mathcal Z^2\times\operatorname{SEQ}(\mathcal Z)\bigr).
+\]
+The first term is a marked part of size $1$; the second represents parts of size at least $2$. Hence
+\begin{align*}
+C(u,z)&=\frac1{1-\left(zu+\frac{z^2}{1-z}\right)}\\
+&=\frac{1-z}{1-(1+u)z+(u-1)z^2}.
+\end{align*}
+This is a two-variable rational generating function.
+\end{example}
+\begin{example}
+Find the generating function for rooted planar binary trees enumerated by their number of vertices and number of leaves.\par\medskip
+Let $T$ be the class of nonempty binary trees. Then
+\[
+T=\mathcal Z+\mathcal Z\times\mathcal E\times T
+ +\mathcal Z\times T\times\mathcal E+\mathcal Z\times T\times T.
+\]
+These cases correspond to no children, an empty left subtree and nonempty right subtree, a nonempty left subtree and empty right subtree, and two nonempty subtrees.
+Marking leaves gives
+\[
+T=\mu\times\mathcal Z+\mathcal Z\times\mathcal E\times T
+ +\mathcal Z\times T\times\mathcal E+\mathcal Z\times T\times T,
+\]
+and therefore
+\[
+T(u,z)=uz+2zT(u,z)+zT(u,z)^2.
+\]
+Solving the quadratic gives
+\[
+T(u,z)=\frac{1-2z-\sqrt{1-4z+4(1-u)z^2}}{2z}.
+\]
+% TODO: verify the handwritten z^2 coefficient in the radical on PDF page 29.
+% It is unclear/inconsistent with the displayed quadratic. The coefficient
+% here is obtained directly from (1-2z)^2-4uz^2.
+The other sign introduces a $1/z$ term, so the minus sign is the formal power series solution. Setting $u=1$ recovers the ordinary generating function for nonempty binary trees. The first terms are
+\[
+T(u,z)=uz+2uz^2+(u^2+4u)z^3+\cdots.
+\]
+\input{diagrams/marked-binary-trees}
+\end{example}
+
+\subsection{Expected values}
+Given $\displaystyle C(u,z)=\sum_{n\ge0}\left(\sum_{k\ge0}c_{k,n}u^k\right)z^n$, its formal partial derivative with respect to $u$ is
+\[
+\frac{\partial}{\partial u}C(u,z)=C_u(u,z)
+=\sum_{n\ge0}\left(\sum_{k\ge1}k c_{k,n}u^{k-1}\right)z^n.
+\]
+The \textit{expected value}, or average, of the parameter $\chi\colon C\to\N$ among the objects of size $n$ is
+\begin{align*}
+\mathbb E_n[\chi]
+&=\sum_{k\ge0}k\,\mathbb P\bigl(\chi(\sigma)=k\mid |\sigma|=n\bigr)\\
+&=\sum_{k\ge0}k\,
+\frac{\#\{\sigma: \chi(\sigma)=k,\ |\sigma|=n\}}
+{\#\{\sigma:|\sigma|=n\}}\\
+&=\sum_{k\ge0}k\frac{c_{k,n}}{c_n}.
+\end{align*}
+Here an object of size $n$ is chosen uniformly at random.
+\begin{proposition}
+For each $n$ with $c_n\ne0$,
+\[
+\mathbb E_n[\chi]=\frac{[z^n]C_u(1,z)}{[z^n]C(1,z)}.
+\]
+\end{proposition}
+\begin{proof}
+Since
+\[
+[z^n]C_u(u,z)=\sum_{k\ge1}k c_{k,n}u^{k-1},
+\qquad [z^n]C_u(1,z)=\sum_{k\ge0}k c_{k,n},
+\]
+dividing by $[z^n]C(1,z)=c_n$ gives the expected value.
+\end{proof}
+\begin{example}
+Find the average number of $0$s among binary strings of length $n$.\par\medskip
+We know that $\displaystyle B(u,z)=\frac1{1-(1+u)z}$, so
+\[
+B_u(1,z)=\left.\frac{z}{(1-(1+u)z)^2}\right|_{u=1}
+=\frac z{(1-2z)^2}.
+\]
+For $n\ge1$, the negative binomial theorem gives
+\begin{align*}
+[z^n]\frac z{(1-2z)^2}
+&=[z^{n-1}](1-2z)^{-2}\\
+&=2^{n-1}[z^{n-1}](1-z)^{-2}\\
+&=2^{n-1}\binom n{n-1}=n2^{n-1}.
+\end{align*}
+Thus the expected value is $\displaystyle\frac{n2^{n-1}}{2^n}=\frac n2$. For $n=0$, it is also $0$.
+\end{example}
+\begin{example}
+The generating function for compositions enumerated by size and number of parts equal to $1$ is
+\[
+C(u,z)=\frac{1-z}{(1-z)(1-uz)-z^2},
+\qquad [z^n]C(1,z)=2^{n-1}\quad(n\ge1).
+\]
+Furthermore,
+\begin{align*}
+C_u(1,z)
+&=\left.\frac{(1-z)^2z}{\bigl((1-z)(1-uz)-z^2\bigr)^2}\right|_{u=1}\\
+&=\frac{(1-z)^2z}{(1-2z)^2}.
+\end{align*}
+For $n\ge3$,
+\begin{align*}
+[z^n]C_u(1,z)
+&=[z^n]\frac{z-2z^2+z^3}{(1-2z)^2}\\
+&=[z^{n-1}](1-2z)^{-2}
+ -2[z^{n-2}](1-2z)^{-2}
+ +[z^{n-3}](1-2z)^{-2}\\
+&=2^{n-2}+n2^{n-3}.
+\end{align*}
+Thus, for $n\ge3$, the average number of parts equal to $1$ is
+\[
+\frac{2^{n-2}+n2^{n-3}}{2^{n-1}}=\frac{n+2}{4}.
+\]
+For $n=0,1,2$, the averages are respectively $0$, $1$, and $1$.
+\end{example}
+
+\subsection{Variance and concentration}
+The \textit{variance} of the parameter $\chi$ on objects of size $n$ is
+\[
+\operatorname{Var}_n[\chi]=\mathbb E_n[\chi^2]-\mathbb E_n[\chi]^2,
+\qquad
+\mathbb E_n[\chi^2]=\sum_{k\ge0}k^2\frac{c_{k,n}}{c_n}.
+\]
+The second derivative contributes $k(k-1)$, so adding the first derivative gives the factor $k^2$.
+% Source annotation says the second derivative gives k^2 directly;
+% the displayed variance formula correctly also includes C_u.
+\begin{proposition}
+For $c_n\ne0$,
+\[
+\operatorname{Var}_n[\chi]
+=\frac{[z^n]\bigl(C_{uu}(1,z)+C_u(1,z)\bigr)}{[z^n]C(1,z)}
+-\left(\frac{[z^n]C_u(1,z)}{[z^n]C(1,z)}\right)^2.
+\]
+\end{proposition}
+\begin{proposition}
+Suppose $\mathbb E_n[\chi]\ne0$ for all sufficiently large $n$, and
+\[
+\lim_{n\to\infty}\frac{\operatorname{Var}_n[\chi]}{\mathbb E_n[\chi]^2}=0.
+\]
+Then, for every $\varepsilon>0$, the probability that a uniformly random object $\sigma\in C$ of size $n$ satisfies
+\[
+(1-\varepsilon)\mathbb E_n[\chi]\le\chi(\sigma)
+\le(1+\varepsilon)\mathbb E_n[\chi]
+\]
+tends to $1$ as $n\to\infty$.
+\end{proposition}
+% Source has (1-epsilon) at both ends of this interval; the upper bound
+% must be (1+epsilon), as also indicated by the accompanying sketch.
+\input{diagrams/concentration}
