@@ -1,0 +1,45 @@
+# macOS metadata
+.DS_Store
+._*
+
+# LaTeX intermediate and build files
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex
+*.synctex.gz
+*.dvi
+*.xdv
+*.nav
+*.snm
+*.vrb
+*.bcf
+*.bbl
+*.blg
+*.run.xml
+*.idx
+*.ind
+*.ilg
+*.glo
+*.gls
+*.glg
+*.acn
+*.acr
+*.alg
+*.loa
+*.lol
+*.thm
+_minted*/
+
+# Editor temporary files
+*~
+*.swp
+*.swo
+.~lock.*#
+
+# Source and compiled PDFs are intentionally tracked.
