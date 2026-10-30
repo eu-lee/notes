@@ -121,3 +121,5 @@ Use `align*` for multi-line derivations.
 - Do not simplify or rewrite proofs unless explicitly requested.
 - Mark genuinely ambiguous handwritten content with `% TODO: verify`.
 - Ensure all generated LaTeX compiles successfully whenever compilation is available.
+- Any manual edits done by the user should be left there; consider it a peer review and only flag if it is factually incorrect or ambiguous.
+- If a example header is used and is split into a question followed by a solution of the answer, give enough spacing (\\ in TeX) between the lines.
