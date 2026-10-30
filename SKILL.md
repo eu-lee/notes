@@ -103,6 +103,7 @@ Use `align*` for multi-line derivations.
 - Make sure to point out if there is any factually incorrect / ambiguous information you would like the user to clarify.
 
 - Try not to dump figures into the main file. It is preferred to have a main document, subsectioned accordingly, with diagrams stored separately.
+- Any annotations in handwritten notes typically refer to afterthoughts or remarks. They should either be incorporated into the text, or if enough relevant content is written, be given a remark.
 ## Workflow
 
 1. Inspect the original PDF page visually.
