@@ -1,0 +1,44 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{lecturestyle}
+
+\begin{document}
+
+\section{Graphs}
+
+\begin{definition}
+A graph $G$ consists of a pair of sets $V(G)$ and $E(G)$ where $V(G)$ is a finite non-empty set of objects called \textit{vertices}, and $E(G)$ is a set of unordered pairs of vertices called \textit{edges}.
+\end{definition}
+
+\begin{example}
+    Consider a graph $G$ defined by $V(G) = \{ a,b,c,d\}$ and $E(G) = \{\{a,b\}, \{b,c\}, \{b,d\}\}$ \\
+
+    We can visualize such a graph as:\\
+    
+\input{diagrams/graph-layouts}
+    
+\end{example}
+
+
+Relevant Terminology:
+\begin{enumerate}
+    \item $u,v$ are said to be adjacent if $\{u,v\}$ is an edge.
+    \item Vertices adjacent to a fixed vertex $u$ are called neighbours of $u$. The set of all neighbours of $u$ is defined $N_G(u)$
+    \item An edge $e = \{u,v\}$ is \textit{incident} with its two ends $u$ and $v$
+\end{enumerate}
+
+Course-specific information:
+\begin{enumerate}
+    \item $e=uv$ is used to denote the edge $e = \{u,v\}$
+    \item Edges are \textit{unordered}: $uv = vu$
+    \item For most of the course, we consider \textit{simple} graphs: graphs with no loops, no multiple edges:
+\input{diagrams/loops-and-multiple-edges}
+    
+\end{enumerate}
+
+Graphs have many applications. Physical networks such as computer networks, electrical networks, road networks can be represented. They can be more abstract as well, such as social networks. Finally, they are also used as data structures in computer science.
+
+\begin{definition}
+    The \textit{degree} of a vertex $v$ in a graph $G$ is the number of edges incident with $v$. We write $\deg_G(v)$ or just $\deg(v)$ if $G$ is understood (in other words, $G$ has a set $V$ and $E$ representing the graph). Alternatively, $\deg(v) = \lvert N_G(v)\rvert$\\
+\end{definition}
+
+\end{document}

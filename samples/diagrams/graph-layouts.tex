@@ -1,0 +1,33 @@
+\begin{center}
+\begin{minipage}{0.45\textwidth}
+\centering
+\begin{tikzpicture}[
+    every node/.style={circle, draw, minimum size=8mm}
+]
+    \node (b) at (0,0) {$b$};
+    \node (a) at (90:1.8) {$a$};
+    \node (c) at (210:1.8) {$c$};
+    \node (d) at (330:1.8) {$d$};
+
+    \draw (b) -- (a);
+    \draw (b) -- (c);
+    \draw (b) -- (d);
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\begin{tikzpicture}[
+    every node/.style={circle, draw, minimum size=8mm}
+]
+    \node (b) at (0,0) {$b$};
+    \node (a) at (-2,-1.8) {$a$};
+    \node (c) at (0,-1.8) {$c$};
+    \node (d) at (2,-1.8) {$d$};
+
+    \draw (b) -- (a);
+    \draw (b) -- (c);
+    \draw (b) -- (d);
+\end{tikzpicture}
+\end{minipage}
+\end{center}

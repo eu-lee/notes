@@ -1,0 +1,157 @@
+% Minimal lecture-note styling inspired by enumeration.ca.
+% Theorem-style statements are unnumbered and accept either
+% \begin{theorem}{Name} or \begin{theorem}[Name].
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{lecturestyle}[2026/10/30 Unnumbered lecture notes with named statements]
+
+% Typography
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Page margins
+\RequirePackage{geometry}
+\geometry{
+  left=18mm,
+  right=18mm,
+  top=20mm,
+  bottom=20mm
+}
+
+% Mathematics
+\RequirePackage{amsmath,amssymb,amsthm}
+
+% Remove QED symbol from proofs
+\renewcommand{\qedsymbol}{}
+
+% Styling
+\RequirePackage{microtype}
+\RequirePackage{xcolor}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{hyperref}
+
+% Colors
+\definecolor{noteink}{HTML}{273441}
+\definecolor{notelink}{HTML}{266C9D}
+\definecolor{notewash}{HTML}{F5F7F9}
+\definecolor{noterule}{HTML}{D9E0E6}
+
+\color{noteink}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=notelink,
+  urlcolor=notelink,
+  citecolor=notelink
+}
+
+% Paragraph spacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 1pt minus 1pt}
+\linespread{1.06}
+
+\RequirePackage{xparse} % Support optional braced theorem titles (argument type g)
+% Internal, unnumbered statement environments.
+
+
+\theoremstyle{definition}
+\newtheorem*{notedefinition}{Definition}
+\newtheorem*{noteexample}{Example}
+\newtheorem*{noteexercise}{Exercise}
+
+\newtheorem*{notetheorem}{Theorem}
+\newtheorem*{notelemma}{Lemma}
+\newtheorem*{noteproposition}{Proposition}
+\newtheorem*{notecorollary}{Corollary}
+
+\theoremstyle{remark}
+\newtheorem*{noteremark}{Remark}
+
+% Accept optional braced names, e.g. \begin{theorem}{Name},
+% optional bracketed names, e.g. \begin{theorem}[Name],
+% and unnamed statements, e.g. \begin{theorem}.
+% When both are supplied, the braced name takes precedence.
+\newcommand{\notestatementbegin}[3]{%
+  \IfNoValueTF{#3}{%
+    \IfNoValueTF{#2}{\begin{#1}}{\begin{#1}[#2]}%
+  }{\begin{#1}[#3]}%
+}
+
+\NewDocumentEnvironment{theorem}{o g}
+  {\notestatementbegin{notetheorem}{#1}{#2}}
+  {\end{notetheorem}}
+\NewDocumentEnvironment{lemma}{o g}
+  {\notestatementbegin{notelemma}{#1}{#2}}
+  {\end{notelemma}}
+\NewDocumentEnvironment{proposition}{o g}
+  {\notestatementbegin{noteproposition}{#1}{#2}}
+  {\end{noteproposition}}
+\NewDocumentEnvironment{corollary}{o g}
+  {\notestatementbegin{notecorollary}{#1}{#2}}
+  {\end{notecorollary}}
+\NewDocumentEnvironment{definition}{o g}
+  {\notestatementbegin{notedefinition}{#1}{#2}}
+  {\end{notedefinition}}
+\NewDocumentEnvironment{example}{o g}
+  {\notestatementbegin{noteexample}{#1}{#2}}
+  {\end{noteexample}}
+\NewDocumentEnvironment{exercise}{o g}
+  {\notestatementbegin{noteexercise}{#1}{#2}}
+  {\end{noteexercise}}
+\NewDocumentEnvironment{remark}{o g}
+  {\notestatementbegin{noteremark}{#1}{#2}}
+  {\end{noteremark}}
+
+% Callout box style
+\tcbset{
+  noteblock/.style={
+    enhanced,
+    breakable,
+    sharp corners,
+    colback=notewash,
+    colframe=notewash,
+    boxrule=0pt,
+    borderline west={2pt}{0pt}{noterule},
+    left=11pt,
+    right=11pt,
+    top=9pt,
+    bottom=9pt,
+    before skip=9pt,
+    after skip=11pt
+  }
+}
+
+% Mathematical callouts
+\tcolorboxenvironment{theorem}{
+  noteblock,
+  borderline west={2pt}{0pt}{notelink}
+}
+\tcolorboxenvironment{lemma}{
+  noteblock,
+  borderline west={2pt}{0pt}{notelink}
+}
+\tcolorboxenvironment{proposition}{
+  noteblock,
+  borderline west={2pt}{0pt}{notelink}
+}
+\tcolorboxenvironment{corollary}{
+  noteblock,
+  borderline west={2pt}{0pt}{notelink}
+}
+\tcolorboxenvironment{definition}{
+  noteblock,
+  borderline west={2pt}{0pt}{notelink}
+}
+\tcolorboxenvironment{example}{noteblock}
+\tcolorboxenvironment{exercise}{noteblock}
+\tcolorboxenvironment{remark}{noteblock}
+
+% Math shortcuts
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\dd}{\,\mathrm{d}}
+
+% Graphs
+\RequirePackage{tikz}
+
+
